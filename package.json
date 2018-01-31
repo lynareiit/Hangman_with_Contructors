@@ -1,0 +1,19 @@
+{
+  "name": "hangman",
+  "version": "1.0.0",
+  "description": "hangman using contructors",
+  "main": "basic.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Veronica",
+  "license": "ISC",
+  "dependencies": {
+    "inquirer": "^1.2.3",
+    "is-letter": "^1.1.1"
+  },
+  "keywords": [
+    "constructors",
+    "javascript"
+  ]
+}
