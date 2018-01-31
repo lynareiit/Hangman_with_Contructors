@@ -9,15 +9,17 @@ var currentWord = require("./word.js");
 //will contain letter specific logic and data . require it here
 var Letter = require("./letter.js");
 //keep track of remaining guesses
+console.log("1" + currentWord);
 function GameStart(){
-console.log("Let's play HangMom!");
+console.log("Start game has started");
 	guessesRemaining = 12;
 	answerSpaces = [];
 	currentLetters = [];
 	lettersGuessed = [];
 	flipper = false;
-//replace letters of word with underscores
+	console.log("2" + currentWord);
 	word = function() {
+
 		currentLetters = currentWord.split("");
 		console.log(currentLetters);
 			for (var i = 0; i < currentWord.length; i++) {
@@ -28,62 +30,50 @@ console.log("Let's play HangMom!");
 			console.log("Guesses remaining: " + guessesRemaining);	
 			
 	};
-//prompt user to guess a letter, capture their "letter" answer
+
 userGuess = function() {
 	console.log("inquirer guess function started");
-	if (guessesRemaining === 0){
-		return printStats();
-	}
 	inquirer.prompt([
       {
         name: "letter",
-        message: "Guess a letter: "
+        message: "Let's play HangMom! Guess a letter: "
       }	
 	]).then(function(letter){
-		flipper = false;
-		if (lettersGuessed.includes(letter.letter)){
-			console.log("You already guessed this letter!");
-			return userGuess();
-		}
 		for (var i = 0; i < currentLetters.length; i++) {
 			if(letter.letter === currentLetters[i]){
 				flipper = true;
-				answerSpaces[i] = letter.letter;
 				lettersGuessed.push(letter.letter);
+				answerSpaces[i] = letter.letter;
+				console.log(answerSpaces);
+				userGuess();
 			}
-		}
-
-		if (flipper == true) { 
-			console.log("CORRECT!!!");
-			console.log(answerSpaces);
-				if (answerSpaces.includes(" _ ")){
-					userGuess();
-				}else{
-				printStats();
-			}
-		}else { 
-			console.log("flipper still false? " + flipper);
-			guessesRemaining--;
-			lettersGuessed.push(letter.letter);
-		 	console.log(lettersGuessed);
-		 	console.log("WRONG!!");
-		 	console.log(answerSpaces + "array test");
-			console.log("Guesses Left: "+ guessesRemaining);
-			userGuess();
-		}
-
-		
-	//else {
-		//console.log("You already guessed this letter!");
-	})
 }
+			else if (flipper === false){
+				for (var j = 0; j < currentLetters.length; j++) {
+					if (currentLetters[j] === letter.letter) {
+					answerSpaces[j] = letter.letter;
+					console.log("letter " + letter.letter + "is not in the word!");
+					guessesRemaining--;
+					
+		 			console.log(lettersGuessed);
+		 			console.log(answerSpaces + "array test");
+					console.log(guessesRemaining);
+					console.log(answerSpaces.join(""));
+					}else {
+					console.log("You already guessed this letter!");
+					}	
 
-console.log("Guesses Remaining: " + guessesRemaining);
+				}
+			})
+		}
+	
 
+
+console.log("test " + guessesRemaining);
 	printStats = function(){
 		if (currentLetters.toString() === answerSpaces.toString()) {
 		console.log ("Nice work! You win!");
-		GameStart();
+		startGame();
 		//loss
 	} else if (guessesRemaining === 0) {
 		inquirer.prompt([
